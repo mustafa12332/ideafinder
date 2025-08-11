@@ -73,12 +73,9 @@ Zod-validated in `src/lib/config.ts`:
 Create `.env` in `backend/` if you need overrides.
 
 ### Endpoints
-Prefix: `/api/v1`
-- Health
-  - `GET /api/v1/health` → `{ status, uptimeMs, timestamp }`
-- Ideas (example module)
-  - `GET /api/v1/ideas` → `{ items: Idea[] }`
-  - `POST /api/v1/ideas` body `{ title: string, description: string }` → `201 Idea`
+Service prefixes:
+- Health: `GET /health/api/v1` → `{ status, uptimeMs, timestamp }`
+- Ideas: `GET /idea/api/v1` → `{ items: Idea[] }`; `POST /idea/api/v1` body `{ title: string, description: string }` → `201 Idea`
 
 ### Testing
 ```
@@ -89,4 +86,19 @@ Tests live in `backend/tests/` with `unit/` and `integration/` subfolders. Integ
 
 ### Adding a new feature module
 Create `src/modules/<feature>/{schemas,repo,service,routes}.ts` and register routes in `src/routes/index.ts`. Keep route handlers thin; put business logic in `service.ts` and IO in `repo.ts`. Define request/response Zod schemas in `schemas.ts` and export types with `z.infer`.
+
+## Frontend (React + TypeScript)
+
+Scaffolded with Create React App (TypeScript) under `frontend/`.
+
+### Commands
+```
+cd frontend
+npm install   # already run during scaffold
+npm start     # dev server
+npm run build # production build
+npm test      # unit tests
+```
+
+The frontend is currently a basic CRA skeleton ready for integration with the backend API.
 

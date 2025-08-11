@@ -1,0 +1,4 @@
+---
+alwaysApply: true
+---
+for each component in react build a unit test
