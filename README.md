@@ -70,12 +70,53 @@ Zod-validated in `src/lib/config.ts`:
 - `PORT`: port number (default: 4000)
 - `LOG_LEVEL`: fatal | error | warn | info | debug | trace | silent (default: info)
 
-Create `.env` in `backend/` if you need overrides.
+**Reddit API Configuration (Optional but recommended):**
+- `REDDIT_CLIENT_ID`: Reddit app client ID
+- `REDDIT_CLIENT_SECRET`: Reddit app client secret  
+- `REDDIT_USER_AGENT`: User agent string (e.g., "IdeaFinder/1.0.0 (by /u/yourusername)")
+
+**OpenAI API Configuration (Optional but highly recommended for intelligent analysis):**
+- `OPENAI_API_KEY`: OpenAI API key for LLM-powered sub-niche extraction
+
+Create `.env` in `backend/` for overrides:
+```env
+# Basic config
+NODE_ENV=development
+PORT=4000
+
+# Reddit API (get from https://www.reddit.com/prefs/apps)
+REDDIT_CLIENT_ID=your_client_id_here
+REDDIT_CLIENT_SECRET=your_client_secret_here
+REDDIT_USER_AGENT=IdeaFinder/1.0.0 (by /u/yourusername)
+
+# OpenAI API (get from https://platform.openai.com/api-keys)
+OPENAI_API_KEY=sk-your-openai-api-key-here
+```
+
+📖 **Setup Guides:**
+- **[REDDIT_API_SETUP.md](./REDDIT_API_SETUP.md)** - Reddit API credentials
+- **[LLM_SETUP.md](./LLM_SETUP.md)** - LLM-powered intelligent analysis
 
 ### Endpoints
 Service prefixes:
-- Health: `GET /health/api/v1` → `{ status, uptimeMs, timestamp }`
-- Ideas: `GET /idea/api/v1` → `{ items: Idea[] }`; `POST /idea/api/v1` body `{ title: string, description: string }` → `201 Idea`
+- **Health**: `GET /health/api/v1` → `{ status, uptimeMs, timestamp }`
+- **Ideas**: `GET /idea/api/v1` → `{ items: Idea[] }`; `POST /idea/api/v1` body `{ title: string, description: string }` → `201 Idea`
+- **Discovery**: 
+  - `POST /api/discover` → Start sub-niche discovery job
+  - `GET /api/discover/:jobId` → Get job status  
+  - `GET /api/discover/:jobId/stream` → SSE stream of real-time progress
+
+**Discovery Example:**
+```bash
+curl -X POST http://localhost:4000/api/discover \
+  -H "Content-Type: application/json" \
+  -d '{
+    "niche": "AI productivity tools",
+    "maxLevels": 2,
+    "maxNodesPerLevel": 5,
+    "sources": ["reddit"]
+  }'
+```
 
 ### Testing
 ```

@@ -6,6 +6,14 @@ const EnvSchema = z.object({
   HOST: z.string().default('0.0.0.0'),
   PORT: z.coerce.number().int().positive().default(4000),
   LOG_LEVEL: z.enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace', 'silent']).default('info'),
+  
+  // Reddit API Configuration
+  REDDIT_CLIENT_ID: z.string().optional(),
+  REDDIT_CLIENT_SECRET: z.string().optional(),
+  REDDIT_USER_AGENT: z.string().optional(),
+  
+  // OpenAI API Configuration
+  OPENAI_API_KEY: z.string().optional(),
 });
 
 export type AppConfig = {
@@ -13,6 +21,14 @@ export type AppConfig = {
   host: string;
   port: number;
   logLevel: 'fatal' | 'error' | 'warn' | 'info' | 'debug' | 'trace' | 'silent';
+  
+  // Reddit API Configuration
+  redditClientId?: string;
+  redditClientSecret?: string;
+  redditUserAgent?: string;
+  
+  // OpenAI API Configuration
+  openaiApiKey?: string;
 };
 
 export function loadConfig(): AppConfig {
@@ -30,6 +46,14 @@ export function loadConfig(): AppConfig {
     host: parsed.data.HOST,
     port: parsed.data.PORT,
     logLevel: parsed.data.LOG_LEVEL,
+    
+    // Reddit API Configuration
+    redditClientId: parsed.data.REDDIT_CLIENT_ID,
+    redditClientSecret: parsed.data.REDDIT_CLIENT_SECRET,
+    redditUserAgent: parsed.data.REDDIT_USER_AGENT,
+    
+    // OpenAI API Configuration
+    openaiApiKey: parsed.data.OPENAI_API_KEY,
   };
 }
 
