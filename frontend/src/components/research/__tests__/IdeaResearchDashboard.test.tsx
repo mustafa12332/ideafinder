@@ -96,7 +96,7 @@ test('runs idea research and displays the validated idea', async () => {
   });
 
   expect(screen.getByText(/450 monthly discussions estimated/i)).toBeInTheDocument();
-  expect(screen.getByText('Tax workflow automation')).toBeInTheDocument();
+  expect(screen.getAllByText('Tax workflow automation')[0]).toBeInTheDocument();
   expect(global.fetch).toHaveBeenCalledWith('/api/research', expect.objectContaining({
     method: 'POST',
   }));

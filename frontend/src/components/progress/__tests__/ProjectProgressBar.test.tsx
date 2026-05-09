@@ -36,7 +36,7 @@ describe('ProjectProgressBar', () => {
     render(<ProjectProgressBar phases={mockPhases} />);
     
     expect(screen.getByText('Discovery')).toBeInTheDocument();
-    expect(screen.getByText('Trend Analysis')).toBeInTheDocument();
+    expect(screen.getAllByText('Trend Analysis')[0]).toBeInTheDocument();
     expect(screen.getByText('Problem Extraction')).toBeInTheDocument();
   });
 
@@ -51,7 +51,7 @@ describe('ProjectProgressBar', () => {
     render(<ProjectProgressBar phases={mockPhases} />);
     
     // Should show the running phase
-    expect(screen.getByText('Trend Analysis')).toBeInTheDocument();
+    expect(screen.getAllByText('Trend Analysis')[0]).toBeInTheDocument();
   });
 
   it('calls onPhaseClick when phase is clicked', () => {

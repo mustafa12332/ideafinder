@@ -12,6 +12,7 @@ export async function discoveryRoutes(app: FastifyInstance, options: { config?: 
     redditClientSecret: options.config?.redditClientSecret,
     redditUserAgent: options.config?.redditUserAgent,
     openaiApiKey: options.config?.openaiApiKey,
+    nodeEnv: options.config?.nodeEnv,
   });
   // POST /api/discover - Start a discovery job
   app.post('/api/discover', {
