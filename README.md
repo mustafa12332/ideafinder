@@ -73,6 +73,7 @@ Zod-validated in `src/lib/config.ts`:
 **Reddit API Configuration (Optional but recommended):**
 - `REDDIT_CLIENT_ID`: Reddit app client ID
 - `REDDIT_CLIENT_SECRET`: Reddit app client secret  
+- `REDDIT_BEARER_TOKEN`: Reddit bearer token for the full idea research workflow
 - `REDDIT_USER_AGENT`: User agent string (e.g., "IdeaFinder/1.0.0 (by /u/yourusername)")
 
 **OpenAI API Configuration (Optional but highly recommended for intelligent analysis):**
@@ -87,6 +88,7 @@ PORT=4000
 # Reddit API (get from https://www.reddit.com/prefs/apps)
 REDDIT_CLIENT_ID=your_client_id_here
 REDDIT_CLIENT_SECRET=your_client_secret_here
+REDDIT_BEARER_TOKEN=your_reddit_token_here
 REDDIT_USER_AGENT=IdeaFinder/1.0.0 (by /u/yourusername)
 
 # OpenAI API (get from https://platform.openai.com/api-keys)
@@ -105,6 +107,8 @@ Service prefixes:
   - `POST /api/discover` → Start sub-niche discovery job
   - `GET /api/discover/:jobId` → Get job status  
   - `GET /api/discover/:jobId/stream` → SSE stream of real-time progress
+- **Idea Research**:
+  - `POST /api/research` → Run the full agent workflow from niche to validated app idea
 
 **Discovery Example:**
 ```bash
@@ -115,6 +119,17 @@ curl -X POST http://localhost:4000/api/discover \
     "maxLevels": 2,
     "maxNodesPerLevel": 5,
     "sources": ["reddit"]
+  }'
+```
+
+**Idea Research Example:**
+```bash
+curl -X POST http://localhost:4000/api/research \
+  -H "Content-Type: application/json" \
+  -d '{
+    "niche": "AI productivity tools for accountants",
+    "maxDepth": 3,
+    "maxBranches": 6
   }'
 ```
 

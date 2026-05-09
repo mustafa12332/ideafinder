@@ -10,6 +10,7 @@ const EnvSchema = z.object({
   // Reddit API Configuration
   REDDIT_CLIENT_ID: z.string().optional(),
   REDDIT_CLIENT_SECRET: z.string().optional(),
+  REDDIT_BEARER_TOKEN: z.string().optional(),
   REDDIT_USER_AGENT: z.string().optional(),
   
   // OpenAI API Configuration
@@ -25,6 +26,7 @@ export type AppConfig = {
   // Reddit API Configuration
   redditClientId?: string;
   redditClientSecret?: string;
+  redditBearerToken?: string;
   redditUserAgent?: string;
   
   // OpenAI API Configuration
@@ -50,6 +52,7 @@ export function loadConfig(): AppConfig {
     // Reddit API Configuration
     redditClientId: parsed.data.REDDIT_CLIENT_ID,
     redditClientSecret: parsed.data.REDDIT_CLIENT_SECRET,
+    redditBearerToken: parsed.data.REDDIT_BEARER_TOKEN,
     redditUserAgent: parsed.data.REDDIT_USER_AGENT,
     
     // OpenAI API Configuration

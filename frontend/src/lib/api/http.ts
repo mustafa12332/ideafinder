@@ -21,4 +21,27 @@ export async function httpGet<TResponse>(path: string, init?: RequestInit): Prom
   return response.json() as Promise<TResponse>;
 }
 
+export async function httpPost<TResponse, TBody>(path: string, body: TBody, init?: RequestInit): Promise<TResponse> {
+  const url = API_BASE_URL ? `${API_BASE_URL}${path}` : path;
+  const response = await fetch(url, {
+    ...init,
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      ...init?.headers,
+    },
+    body: JSON.stringify(body),
+  });
+
+  if (!response.ok) {
+    const err = new Error(`HTTP ${response.status}`) as HttpError;
+    err.status = response.status;
+    try {
+      (err as any).body = await response.json();
+    } catch {}
+    throw err;
+  }
+
+  return response.json() as Promise<TResponse>;
+}
 
